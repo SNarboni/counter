@@ -6,26 +6,56 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0,
+      count1: 0,
+      count2: 0,
     };
   }
 
-  decrementCount = () => {
-    let result = this.state.count;
+  decrementCount1 = () => {
+    let result = this.state.count1;
     if (result === 0) {
       return;
     } else {
       result--;
-      this.setState({ count: result });
+      this.setState({ count1: result });
     }
   };
-  incrementCount = () => {
-    let result = this.state.count;
+
+  decrementCount2 = () => {
+    let result = this.state.count2;
+    if (result === 0) {
+      return;
+    } else if (result === this.state.count1) {
+      this.decrementCount1();
+      result--;
+      this.setState({ count2: result });
+    } else {
+      result--;
+      this.setState({ count2: result });
+    }
+  };
+
+  incrementCount1 = () => {
+    let result = this.state.count1;
+    if (result === 100) {
+      return;
+    } else if (result === this.state.count2) {
+      this.incrementCount2();
+      result++;
+      this.setState({ count1: result });
+    } else {
+      result++;
+      this.setState({ count1: result });
+    }
+  };
+
+  incrementCount2 = () => {
+    let result = this.state.count2;
     if (result === 100) {
       return;
     } else {
       result++;
-      this.setState({ count: result });
+      this.setState({ count2: result });
     }
   };
 
@@ -35,14 +65,14 @@ class App extends React.Component {
         <header className="App-header">
           <h1>Counter</h1>
           <Counter
-            resultatDuCounter={this.state.count}
-            retire={this.decrementCount}
-            ajoute={this.incrementCount}
+            resultatDuCounter={this.state.count1}
+            retire={this.decrementCount1}
+            ajoute={this.incrementCount1}
           />
           <Counter
-            resultatDuCounter={this.state.count}
-            retire={this.decrementCount}
-            ajoute={this.incrementCount}
+            resultatDuCounter={this.state.count2}
+            retire={this.decrementCount2}
+            ajoute={this.incrementCount2}
           />
         </header>
       </div>
